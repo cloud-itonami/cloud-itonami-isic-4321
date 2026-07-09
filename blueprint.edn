@@ -1,0 +1,11 @@
+{:itonami.blueprint/id "cloud-itonami-4321"
+ :itonami.blueprint/name "Community Electrical Installation"
+ :itonami.blueprint/isic-rev5 "4321"
+ :itonami.blueprint/domain :construction/electrical-installation
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:worker-safety :fire-safety :consumer-protection]
+ :itonami.blueprint/governor :electrical-trade-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger :cae]
+ :itonami.blueprint/optional-technologies [:optimization]
+ :itonami.blueprint/status :public-oss}
