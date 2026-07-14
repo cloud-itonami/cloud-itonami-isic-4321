@@ -8,4 +8,13 @@
  :itonami.blueprint/robotics true
  :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger :cae]
  :itonami.blueprint/optional-technologies [:optimization]
- :itonami.blueprint/status :public-oss}
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented
+ :itonami.blueprint/implemented-slice
+ "electrical-trade coordination: `src/electrical` -- Electrical Trade Advisor
+ (LLM proposal-only) ⊣ Electrical Trade Governor (legal-basis/scope/
+ hazard/inspection hard-gates), per-jurisdiction legal-basis catalog
+ (JPN/USA/DEU, `electrical.facts`) with real official sources. All
+ operations are :propose (coordination suggestions); licensed electrician/
+ inspector executes. Never performs electrical work, never certifies
+ code compliance or electrical safety (licensed electrician domain)."}

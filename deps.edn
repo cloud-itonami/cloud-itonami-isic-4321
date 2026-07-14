@@ -1,0 +1,25 @@
+{:paths ["src"]
+ ;; This repo has no external dependencies beyond what the workspace provides.
+ ;; It uses only Clojure/ClojureScript stdlib + a stub for Datomic integration
+ ;; (not included here for standalone forkability). All code is portable .cljc
+ ;; with no JVM-only constructs.
+ :deps {}
+ :aliases
+ {;; workspace dev -- override with workspace checkouts if needed
+  :dev {:override-deps {}}
+
+  ;; clojure -M:run  -> drive the demo simulation
+  :run {:main-opts ["-m" "electrical.sim"]}
+
+  ;; clojure -M:test -> run all tests
+  :test {:extra-paths ["test"]
+         :extra-deps {io.github.cognitect-labs/test-runner
+                      {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}
+
+  ;; static analysis
+  :lint {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+         :main-opts    ["-m" "clj-kondo.main"
+                        "--lint" "src" "test"
+                        "--fail-level" "error"]}}}
