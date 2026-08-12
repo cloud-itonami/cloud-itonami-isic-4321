@@ -1,15 +1,25 @@
 {:paths ["src"]
- ;; This repo has no external dependencies beyond what the workspace provides.
- ;; It uses only Clojure/ClojureScript stdlib + a stub for Datomic integration
- ;; (not included here for standalone forkability). All code is portable .cljc
- ;; with no JVM-only constructs.
- :deps {}
+ ;; The actor itself (src/electrical/*.cljc) has no external dependencies:
+ ;; Clojure/ClojureScript stdlib + a stub for Datomic integration (not
+ ;; included here for standalone forkability), all portable .cljc with no
+ ;; JVM-only constructs. The single git dep below is used ONLY by the
+ ;; build-time HTML renderer (`electrical.render-html`, a .clj) to style
+ ;; the operator console with this workspace's base design system
+ ;; (デジタル庁デザインシステム). It is not on the actor's runtime path.
+ :deps {io.github.kotoba-lang/jp-go-digital-design-system
+        {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
+         :git/sha "83db99546eabc53613ae826ea41d1533a3c574af"}}
  :aliases
  {;; workspace dev -- override with workspace checkouts if needed
   :dev {:override-deps {}}
 
   ;; clojure -M:run  -> drive the demo simulation
   :run {:main-opts ["-m" "electrical.sim"]}
+
+  ;; clojure -M:dev:render-html [out-file] -> regenerate
+  ;; docs/samples/operator-console.html through the REAL actor
+  ;; (flagship checklist item 2, ADR-2607189300 Wave 6).
+  :render-html {:main-opts ["-m" "electrical.render-html"]}
 
   ;; clojure -M:test -> run all tests
   :test {:extra-paths ["test"]
