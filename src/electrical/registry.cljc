@@ -6,7 +6,7 @@
   electrical decisions (execution, energization, certification) are
   made by licensed electricians and inspectors. Records are audit-
   backed and include human sign-off."
-  (:require [electrical.facts :as facts]))
+  (:require [kotoba.lang.text] [electrical.facts :as facts]))
 
 (defn render-proposal
   "Render a proposal as human-readable text for review.
@@ -15,7 +15,7 @@
   [proposal]
   (let [{:keys [op subject value confidence cites]} proposal
         basis-text (if (seq cites)
-                     (str "\nLegal basis: " (clojure.string/join ", " cites))
+                     (str "\nLegal basis: " (kotoba.lang.text/join ", " cites))
                      "")]
     (str "Proposal: " (name op) " for project " subject
          "\nConfidence: " (format "%.0f%%" (* 100 confidence))
@@ -35,7 +35,7 @@
                 {})
         legal-note (if basis
                      (str "Legal basis: " (:basis-name basis) " (authorities: "
-                          (clojure.string/join ", " (:authorities basis)) ")")
+                          (kotoba.lang.text/join ", " (:authorities basis)) ")")
                      "Legal basis: Not found in catalog")]
     (str "=== ELECTRICAL INSTALLATION PROJECT RECORD ===\n"
          "Project ID: " id "\n"
@@ -46,17 +46,17 @@
          "Status: " (if closed? "CLOSED" "ACTIVE") " (registered=" registered? ")\n"
          "\n--- HAZARD FLAGS ---\n"
          (if (seq hazard-flags)
-           (clojure.string/join "\n" (map #(str "  [" (:severity %) "] " (:type %)
+           (kotoba.lang.text/join "\n" (map #(str "  [" (:severity %) "] " (:type %)
                                               ": " (:description %)) hazard-flags))
            "  (none)")
          "\n\n--- PROGRESS MILESTONES ---\n"
          (if (seq progress-records)
-           (clojure.string/join "\n" (map #(str "  " (:milestone %) ": " (:description %))
+           (kotoba.lang.text/join "\n" (map #(str "  " (:milestone %) ": " (:description %))
                                           progress-records))
            "  (none)")
          "\n\n--- CREW DISPATCHES (PROPOSED) ---\n"
          (if (seq crew-dispatches)
-           (clojure.string/join "\n" (map #(str "  [" (:crew-type %) "] "
+           (kotoba.lang.text/join "\n" (map #(str "  [" (:crew-type %) "] "
                                               (:task %) ": " (:description %))
                                           crew-dispatches))
            "  (none)")
