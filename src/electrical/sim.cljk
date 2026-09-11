@@ -3,7 +3,7 @@
   Shows the actor coordinating an electrical installation project from
   intake through hazard flagging and inspection request.
 
-  Run with: clojure -M:run"
+  Run with: kbb -M:run"
   (:require [electrical.store :as store]
             [electrical.phase :as phase]
             [electrical.governor :as governor]
