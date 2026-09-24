@@ -2,7 +2,7 @@
   "Store protocol contract test: verifies that MemStore (and any other
   Store impl) satisfies the Store interface correctly. Used in both
   Clojure (JVM/Chicory) and ClojureScript (browser/nbb) contexts."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [electrical.store :as store]))
 
 (deftest mem-store-implements-protocol

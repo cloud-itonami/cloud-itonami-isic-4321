@@ -1,7 +1,7 @@
 (ns electrical.governor-test
   "Electrical Trade Governor tests: verify the independent compliance
   layer that gates proposals from the advisor."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [electrical.governor :as governor]
             [electrical.store :as store]
             [electrical.operation :as op]))
