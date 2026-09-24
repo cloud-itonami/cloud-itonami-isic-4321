@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README "Robotics premise": robots install conduit and cable, assemble
+;; panels and inspect electrical installations (ISIC 4321). The physical
+;; work: an installation arm raising a luminaire or conduit run to the
+;; ceiling, and the fire-stop seal it builds where cables pass through a
+;; fire-separating wall.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-4321"
+ :cases
+ [{:id :raise-luminaire-to-ceiling
+   :kind :manipulator
+   :procedure "installation arm on a mobile base lifts a luminaire or a pre-bent conduit run from the cart to its ceiling fixing point"
+   :params {:l1-m 0.80 :l2-m 0.70 :m1-kg 14.0 :m2-kg 9.0
+            :from [0.90 0.20] :to [0.40 1.30] :duration-s 3.0 :steps 500}
+   :sweep {:param :payload-kg :values [2.0 5.0 8.0 12.0 16.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 300.0 :basis "estimate: continuous shoulder torque of a ~10 kg-payload arm with a 1.5 m reach"}
+   :boundary {:lo 0.5 :hi 60.0}}
+  {:id :cable-penetration-fire-stop
+   :kind :thermal
+   :procedure "gypsum-based fire-stop mortar sealing a cable penetration through a fire-separating wall is exposed to the ISO 834 standard fire on one side"
+   :params {:conductivity-w-mk 0.30 :density-kg-m3 900.0 :specific-heat-j-kgk 1100.0
+            :t0-c 20.0 :hot-curve :iso-834 :h-front-w-m2k 25.0 :t-back-ambient-c 20.0 :h-back-w-m2k 9.0
+            :threshold-c 200.0 :duration-s 21600.0 :nodes 11}
+   :sweep {:param :thickness-m :values [0.025 0.035 0.050 0.065 0.080]}
+   :quantity :time-to-threshold-s
+   :limit {:min 3600.0 :basis "estimate: an EI 60 penetration seal is assumed (the rating actually required follows the wall's rating in the local code); 180 K unexposed-side rise is the insulation criterion used for penetration seals (EN 1366-3 with EN 1363-1). Cable conduction through the seal is not modelled"}
+   :boundary {:lo 0.015 :hi 0.08}}]}
